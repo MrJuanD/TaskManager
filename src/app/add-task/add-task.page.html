@@ -1,0 +1,71 @@
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Title</ion-label>
+    <ion-input [(ngModel)]="Title"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Description</ion-label>
+    <ion-textarea [(ngModel)]="Description"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Due date</ion-label>
+    <ion-datetime [(ngModel)]="DueDate" display-timezone="utc"></ion-datetime>
+  </ion-item>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="Status">
+      <ion-list-header>
+        <ion-label>Status</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>In progress</ion-label>
+        <ion-radio slot="start" value="false"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Done</ion-label>
+        <ion-radio slot="start" value="true"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="TaskTypeId">
+      <ion-list-header>
+        <ion-label>Type</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-radio slot="start" value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Meeting</ion-label>
+        <ion-radio slot="start" value="2"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Shopping</ion-label>
+        <ion-radio slot="start" value="3"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Meal</ion-label>
+        <ion-radio slot="start" value="4"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Party</ion-label>
+        <ion-radio slot="start" value="5"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+  <div style="text-align: center;">
+    <ion-button color="primary" (click)="addTask()">Create</ion-button>
+    <ion-button color="danger" (click)="goToTaskList()">Cancel</ion-button>
+  </div>
+</ion-content>
