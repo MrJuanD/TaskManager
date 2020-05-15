@@ -15,9 +15,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <div>
     <div class="task-container">
-      <ion-card *ngFor="let task of tasks" [ngClass]="{'done': task.Status, 'in-progress': !task.Status}" (click)="presentModal(task.id)">
+      <ion-card *ngFor="let task of tasks" [ngClass]="{'done': task.Status, 'in-progress': !task.Status}" (click)="presentModal(task.Id)">
         <ion-item>
           <ion-icon name="{{task.Type.IconName}}" slot="start"></ion-icon>
           <ion-label>{{task.Title}}</ion-label>

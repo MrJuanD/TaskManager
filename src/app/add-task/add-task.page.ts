@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { TaskType } from 'src/Models/Task';
+import { TaskType, Task } from 'src/Models/Task';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-add-task',
@@ -38,21 +39,43 @@ export class AddTaskPage {
   Title: string;
   Description: string;
   DueDate: Date;
-  Status: boolean;
+  Status:  any;
   TaskType: TaskType;
   TaskTypeId: number;
 
-  constructor(public router: Router) { }
+  constructor(public storage: Storage, public router: Router) { }
 
   addTask() {
     this.TaskType = this.TaskTypes.find(item => item.Id == this.TaskTypeId);
-    console.log(this.Title);
-    console.log(this.Description);
-    console.log(this.DueDate);
-    console.log(this.Status);
-    console.log(this.TaskType);
+     console.log(this.Title);
+     console.log(this.Description);
+     console.log(this.DueDate);
+     console.log(this.Status);
+     console.log(this.TaskType);
+//let task: Task = {}
+      //  this.tasks = this.getTasks();
+  //  console.log(JSON.stringify(this.tasks));
+   //  this.storage.set("tasks", JSON.stringify(this.tasks))
+   this.storage.get("taskId").then(item =>
+    {
+      this.storage.get("tasks").then(item2 => {
+        let tasks: Task[] = JSON.parse(item2);
+        if (tasks == null) {
+          tasks = []
+        }
+        let newTask: Task = {Id: item ? item + 1 : 1, Title: this.Title, Description: this.Description,
+           DueDate: this.DueDate, Status: this.Status == "true" || this.Status == true, Type: this.TaskType};
+           tasks.push(newTask);
+           this.storage.set("taskId", JSON.stringify(newTask.Id));
+           this.storage.set("tasks", JSON.stringify(tasks));
+           this.goToTaskList();
+           
+      });
+    });
   }
   goToTaskList() {
-    this.router.navigateByUrl('list');
+    this.router.navigateByUrl('list').then(() => {
+      window.location.reload();
+    });;
   }
 }

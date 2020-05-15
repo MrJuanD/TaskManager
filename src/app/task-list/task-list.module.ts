@@ -7,7 +7,6 @@ import { TaskListPage } from './task-list.page';
 import { TaskListPageRoutingModule } from './task-list-routing.module';
 
 
-
 @NgModule({
   imports: [
     CommonModule,

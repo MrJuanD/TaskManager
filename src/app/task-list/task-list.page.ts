@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/Models/Task';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 import { TaskDetailsPage } from '../task-details/task-details.page';
 import { ModalController } from '@ionic/angular';
 
@@ -13,10 +14,13 @@ export class TaskListPage implements OnInit {
 
   tasks: Task[];
 
-  constructor(public modalController: ModalController, public router: Router) {}
+  constructor(public storage: Storage, public modalController: ModalController, public router: Router) {}
 
   ngOnInit() {
-    this.tasks = this.getTasks();
+  //  this.tasks = this.getTasks();
+  //  console.log(JSON.stringify(this.tasks));
+   //  this.storage.set("tasks", JSON.stringify(this.tasks))
+     this.storage.get("tasks").then(item =>   this.tasks = JSON.parse(item));
   }
 
   goToAddTask() {
@@ -24,7 +28,7 @@ export class TaskListPage implements OnInit {
   }
 
   async presentModal(taskId: number) {
-    let task = this.tasks.find(item => item.Id == 1);
+    let task = this.tasks.find(item => item.Id == taskId);
       const modal = await this.modalController.create({
         component: TaskDetailsPage,
         componentProps: {
