@@ -52,7 +52,13 @@ export class TaskListPage implements OnInit {
     this.tasks = this.tasks.filter(item => item.Id != id);
     this.storage.set("tasks", JSON.stringify(this.tasks));
   }
-
+  deleteTasks() {
+    if (confirm("Are you sure?"))
+    {
+      this.storage.clear();
+      window.location.reload();
+    }
+  }
   getTasks() {
     let tasks = [];
     tasks.push(

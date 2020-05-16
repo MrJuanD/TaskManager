@@ -46,34 +46,44 @@ export class AddTaskPage {
   constructor(public storage: Storage, public router: Router) { }
 
   addTask() {
-    this.TaskType = this.TaskTypes.find(item => item.Id == this.TaskTypeId);
-     console.log(this.Title);
-     console.log(this.Description);
-     console.log(this.DueDate);
-     console.log(this.Status);
-     console.log(this.TaskType);
-//let task: Task = {}
-      //  this.tasks = this.getTasks();
-  //  console.log(JSON.stringify(this.tasks));
-   //  this.storage.set("tasks", JSON.stringify(this.tasks))
-   this.storage.get("taskId").then(item =>
+    if (this.validateForm())
     {
-      this.storage.get("tasks").then(item2 => {
-        let tasks: Task[] = JSON.parse(item2);
-        if (tasks == null) {
-          tasks = []
-        }
-        let newTask: Task = {Id: item ? item + 1 : 1, Title: this.Title, Description: this.Description,
-           DueDate: this.DueDate, Status: this.Status == "true" || this.Status == true, Type: this.TaskType};
-           tasks.push(newTask);
-           this.storage.set("taskId", JSON.stringify(newTask.Id));
-           this.storage.set("tasks", JSON.stringify(tasks));
-           this.goToTaskList();
-           
-      });
-    });
+      this.TaskType = this.TaskTypes.find(item => item.Id == this.TaskTypeId);
+      this.storage.get("taskId").then(item =>
+       {
+         this.storage.get("tasks").then(item2 => {
+           let tasks: Task[] = JSON.parse(item2);
+           if (tasks == null) {
+             tasks = []
+           }
+           let newTask: Task = {Id: item ? item + 1 : 1, Title: this.Title, Description: this.Description,
+              DueDate: this.DueDate, Status: this.Status == "true" || this.Status == true, Type: this.TaskType};
+              tasks.push(newTask);
+              this.storage.set("taskId", JSON.stringify(newTask.Id));
+              this.storage.set("tasks", JSON.stringify(tasks));
+              this.goToTaskList();
+              
+         });
+       });
+    }
+    else alert("All fields are requied!");
   }
+
+validateForm() {
+  return this.Title != null && this.Title != '' && this.Description != null &&
+    this.Description != '' && this.DueDate != null && this.DueDate.toString() != ''
+      && this.Status != null && this.TaskTypeId != null;
+}
+
   goToTaskList() {
+    // console.log(this.Title != null && this.Title != "" && this.Description != null &&
+    // this.Description != "" && this.DueDate && this.DueDate  != null && this.DueDate.toString() != ""
+    //   && this.Status != null && this.TaskTypeId != null);
+    //    console.log(this.Title);
+    //  console.log(this.Description);
+    //  console.log(this.DueDate);
+    //  console.log(this.Status);
+    //  console.log(this.TaskTypeId);
     this.router.navigateByUrl('list').then(() => {
       window.location.reload();
     });;
