@@ -43,6 +43,16 @@ export class TaskListPage implements OnInit {
       return await modal.present();
   }
 
+  markAsDone(id: number) {
+    this.tasks.find(item => item.Id == id).Status = true;
+    this.storage.set("tasks", JSON.stringify(this.tasks));
+  }
+
+  delete(id: number) {
+    this.tasks = this.tasks.filter(item => item.Id != id);
+    this.storage.set("tasks", JSON.stringify(this.tasks));
+  }
+
   getTasks() {
     let tasks = [];
     tasks.push(

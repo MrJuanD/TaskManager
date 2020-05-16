@@ -17,12 +17,14 @@
 
   <div>
     <div class="task-container">
-      <ion-card *ngFor="let task of tasks" [ngClass]="{'done': task.Status, 'in-progress': !task.Status}" (click)="presentModal(task.Id)">
+      <ion-card *ngFor="let task of tasks" [ngClass]="{'done': task.Status, 'in-progress': !task.Status}">
         <ion-item>
           <ion-icon name="{{task.Type.IconName}}" slot="start"></ion-icon>
           <ion-label>{{task.Title}}</ion-label>
+          <ion-button *ngIf="!task.Status" color="primary" (click)="markAsDone(task.Id)">Mark as done</ion-button>
+          <ion-button color="danger" (click)="delete(task.Id)">Delete task</ion-button>
         </ion-item>
-        <ion-card-content>
+        <ion-card-content (click)="presentModal(task.Id)">
           <span>Due date: {{task.DueDate}} </span>
           <span *ngIf="task.Status">Status: Done</span>
           <span *ngIf="!task.Status">Status: In progress</span>
